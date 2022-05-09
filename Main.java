@@ -12,11 +12,14 @@ class Main{
         System.out.println("Performing Quicksort... \n");
         ForkJoinPool pool = ForkJoinPool.commonPool();
         int len = numbers.length-1;
+        long start = System.currentTimeMillis();
         ThreadedQuicksort task = new ThreadedQuicksort(numbers,0,len);
         int res = pool.invoke(task);
+        long end = System.currentTimeMillis();
         System.out.println("\nQuickSort Done.");
         System.out.print("\n");
         printArray(numbers);
+        System.out.println("\nTime taken: "+(end-start)+" ms");
         System.out.print("\n");
     }
 
