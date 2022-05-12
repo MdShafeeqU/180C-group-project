@@ -3,7 +3,7 @@ import java.util.concurrent.ForkJoinPool;
 
 class Main{
     public static void main(String[] args) {  
-        int numberList1[] = generateRandom(100000, 100);
+        int numberList1[] = generateRandom(100000, 10000);
         callThreadedQuicksort(numberList1);
         callQuicksort(numberList1);
     }      
