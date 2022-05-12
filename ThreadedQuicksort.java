@@ -105,32 +105,28 @@ class ThreadedQuicksort extends RecursiveTask<Integer>
 
 
 
-// class Main2
+// class Main
 // {
+//     public static int[] generateRandom(int size, int range)
+//     {
+//         int randomArray[] = new int[size];
+//         Random randNum = new Random();
+//         for (int i = 0;i < size; i++){
+//             randomArray[i] = randNum.nextInt(range)+1;
+//         }
+//         return randomArray;
+//     }
+
 //     public static void main(String[] args)
 //     {   
 //         ForkJoinPool pool = ForkJoinPool.commonPool();
-//         Random rand = new Random();
-//         // int[] numbers = new int[7];
-
-//         // for (int i = 0; i < numbers.length; i++) 
-//         // {
-//         //     numbers[i] = rand.nextInt(100);
-//         // }
-
-//         int[] numbers = new int[]{9,2,4,5,1,3,6,8,7};
-
+//         int numbers[] = generateRandom(100000, 100);
 //         int len = numbers.length-1;
 //         ThreadedQuicksort task = new ThreadedQuicksort(numbers,0,len);
+//         long start = System.currentTimeMillis();
 //         int res = pool.invoke(task);
+//         long end = System.currentTimeMillis();
+//         System.out.println("\nTime taken: "+(end-start)+" ms");
 //         System.out.println("Done.");
-//         System.out.print("\n");
-//         for(int i=0; i<numbers.length; i++)
-//         {   
-//             System.out.print(numbers[i]);
-//             System.out.print("  ");
-//         }
-//         System.out.print("\n");
-
 //     }
 // }

@@ -3,22 +3,35 @@ import java.util.concurrent.ForkJoinPool;
 
 class Main{
     public static void main(String[] args) {  
-        int numberList1[] = generateRandom(10, 100);
+        int numberList1[] = generateRandom(100000, 100);
+        callThreadedQuicksort(numberList1);
         callQuicksort(numberList1);
-        
     }      
 
-    public static void callQuicksort(int[] numbers){
-        System.out.println("Performing Quicksort... \n");
+    public static void callThreadedQuicksort(int[] numbers){
+        System.out.println("Performing Threaded Quicksort... \n");
         ForkJoinPool pool = ForkJoinPool.commonPool();
         int len = numbers.length-1;
         long start = System.currentTimeMillis();
         ThreadedQuicksort task = new ThreadedQuicksort(numbers,0,len);
         int res = pool.invoke(task);
         long end = System.currentTimeMillis();
+        System.out.println("\nThreaded Quicksort Done.");
+        System.out.print("\n");
+        // printArray(numbers);
+        System.out.println("\nTime taken: "+(end-start)+" ms");
+        System.out.print("\n");
+    }
+
+    public static void callQuicksort(int[] numbers){
+        System.out.println("Performing Quicksort... \n");
+        int len = numbers.length-1;
+        long start = System.currentTimeMillis();
+        Quicksort task = new Quicksort(numbers,0,len);
+        long end = System.currentTimeMillis();
         System.out.println("\nQuickSort Done.");
         System.out.print("\n");
-        printArray(numbers);
+        // printArray(numbers);
         System.out.println("\nTime taken: "+(end-start)+" ms");
         System.out.print("\n");
     }
