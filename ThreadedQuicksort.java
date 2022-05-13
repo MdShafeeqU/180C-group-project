@@ -1,3 +1,4 @@
+import java.util.Arrays;
 import java.util.Random;
 import java.util.concurrent.RecursiveTask;
 import java.util.concurrent.ForkJoinPool;
@@ -14,22 +15,26 @@ class ThreadedQuicksort extends RecursiveTask<Integer>
     int[] array;
     int highIndex;
     int lowIndex;
+    int THRESHOLD;
 
     public ThreadedQuicksort(int[] arr, int start, int end)
     {
         this.array = arr;
         lowIndex = start;
         highIndex = end;
+        THRESHOLD = 1000000;
+
     }
 
-    private static void quicksort(int[] array) 
+    private static void quicksort(int[] array, int THRESHOLD) 
     {
-        quicksort(array, 0, array.length - 1);
+        quicksort(array, 0, array.length - 1, THRESHOLD);
     }
 
     @Override
     protected Integer compute()
     {
+       
         if(globalvars.threadflag==0)
         {
             globalvars.threadflag=1;
@@ -49,16 +54,24 @@ class ThreadedQuicksort extends RecursiveTask<Integer>
         }
         else
         {
-            quicksort(array);
+            quicksort(array,THRESHOLD);
             return 1;
         }
     }
         
-    private static void quicksort(int[] array, int lowIndex, int highIndex) 
+    private static void quicksort(int[] array, int lowIndex, int highIndex, int THRESHOLD) 
     {
+
+        
 
         if (lowIndex >= highIndex) {
         return;
+        }
+
+        if (highIndex - lowIndex <= THRESHOLD) 
+        {
+                Arrays.sort(array, lowIndex, highIndex);
+                return;
         }
 
         int pivotIndex = new Random().nextInt(highIndex - lowIndex) + lowIndex;
@@ -67,8 +80,8 @@ class ThreadedQuicksort extends RecursiveTask<Integer>
 
         int leftPointer = partition(array, lowIndex, highIndex, pivot);
 
-        quicksort(array, lowIndex, leftPointer - 1);
-        quicksort(array, leftPointer + 1, highIndex);
+        quicksort(array, lowIndex, leftPointer - 1, THRESHOLD);
+        quicksort(array, leftPointer + 1, highIndex, THRESHOLD);
     }
 
     private static int partition(int[] array, int lowIndex, int highIndex, int pivot) 
@@ -102,31 +115,3 @@ class ThreadedQuicksort extends RecursiveTask<Integer>
         }
     }
 }
-
-
-
-// class Main
-// {
-//     public static int[] generateRandom(int size, int range)
-//     {
-//         int randomArray[] = new int[size];
-//         Random randNum = new Random();
-//         for (int i = 0;i < size; i++){
-//             randomArray[i] = randNum.nextInt(range)+1;
-//         }
-//         return randomArray;
-//     }
-
-//     public static void main(String[] args)
-//     {   
-//         ForkJoinPool pool = ForkJoinPool.commonPool();
-//         int numbers[] = generateRandom(100000, 100);
-//         int len = numbers.length-1;
-//         ThreadedQuicksort task = new ThreadedQuicksort(numbers,0,len);
-//         long start = System.currentTimeMillis();
-//         int res = pool.invoke(task);
-//         long end = System.currentTimeMillis();
-//         System.out.println("\nTime taken: "+(end-start)+" ms");
-//         System.out.println("Done.");
-//     }
-// }
