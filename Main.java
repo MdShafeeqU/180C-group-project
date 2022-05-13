@@ -3,10 +3,12 @@ import java.util.concurrent.ForkJoinPool;
 
 class Main{
     public static void main(String[] args) {  
-        int numberList1[] = generateRandom(90000000, 10000000);
-        for(int i=0; i<6; i++)
+    	int[] sizeArray = {10000000, 13000000, 16000000, 20000000, 25000000};
+        
+        for(int i=0; i<sizeArray.length; i++)
         {
-            System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ \n");
+            int numberList1[] = generateRandom(sizeArray[i], 10000000);
+            System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  SIZE: "+sizeArray[i]);
             callThreadedQuicksort(numberList1);
             callQuicksort(numberList1);
         }
@@ -14,32 +16,22 @@ class Main{
 
     public static void callThreadedQuicksort(int[] numbers){
         
-        System.out.println("Performing Threaded Quicksort... \n");
         ForkJoinPool pool = ForkJoinPool.commonPool();
         int len = numbers.length-1;
         long start = System.currentTimeMillis();
         ThreadedQuicksort task = new ThreadedQuicksort(numbers,0,len);
         int res = pool.invoke(task);
         long end = System.currentTimeMillis();
-        System.out.println("\nThreaded Quicksort Done.");
-        System.out.print("\n");
-        // printArray(numbers);
-        System.out.println("\nTime taken: "+(end-start)+" ms");
-        System.out.print("\n");
+        System.out.println("Threaded Quicksort time taken: "+(end-start)+" ms");
         // }
     }
 
     public static void callQuicksort(int[] numbers){
-        System.out.println("Performing Quicksort... \n");
         int len = numbers.length-1;
         long start = System.currentTimeMillis();
         Quicksort task = new Quicksort(numbers,0,len);
         long end = System.currentTimeMillis();
-        System.out.println("\nQuickSort Done.");
-        System.out.print("\n");
-        // printArray(numbers);
-        System.out.println("\nTime taken: "+(end-start)+" ms");
-        System.out.print("\n");
+        System.out.println("QuickSort time taken: "+(end-start)+" ms");
     }
 
     public static int[] generateRandom(int size, int range){
