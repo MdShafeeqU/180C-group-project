@@ -6,9 +6,9 @@ class Main{
         int numberList1[] = generateRandom(90000000, 10000000);
         for(int i=0; i<6; i++)
         {
-        System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ \n");
-        callThreadedQuicksort(numberList1);
-        callQuicksort(numberList1);
+            System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ \n");
+            callThreadedQuicksort(numberList1);
+            callQuicksort(numberList1);
         }
     }      
 
