@@ -1,2 +1,4 @@
 # 180C-group-project-
-Test Push
+Compile: javac Main.java
+
+Run: java Main
